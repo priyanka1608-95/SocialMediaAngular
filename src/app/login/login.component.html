@@ -1,0 +1,26 @@
+
+<div class="container" style="align-self: center; width: 40%;">
+<form #loginForm="ngForm" (ngSubmit)=login(loginForm) class="text-center border border-dark p-5" role="form">
+
+    <p class="h4 mb-4">Sign in</p>
+  
+    
+    <input type="email" ngModel id="email" name="email" class="form-control mb-4" placeholder="E-mail">
+  
+    <input type="password" ngModel id="password" name="password" class="form-control mb-4" placeholder="Password">
+  
+    <!-- Sign in button -->
+    <button class="btn btn-primary" type="submit">Sign in</button>
+    <br>
+    <hr>
+  
+    <!-- Register -->
+    <p>Not a member?
+      <a href="">Register</a>
+    </p>
+
+    <div class="alert alert-danger" *ngIf="status == 'fail'">{{errmsg}}</div>
+  
+  </form>
+</div>
+<router-outlet></router-outlet>

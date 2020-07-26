@@ -1,0 +1,17 @@
+<!-- <form #postForm="ngForm" (ngSubmit)=addpost(postForm) role="form">
+    <mat-form-field class="example-full-width">
+        <mat-form-field class="example-full-width">
+            <mat-label>Add your New post here</mat-label>
+            <textarea ngModel name="content" matInput placeholder="Ex. It makes me feel..."></textarea>
+        </mat-form-field>
+      
+    </mat-form-field>
+    <hr>
+    <button class="btn btn-primary" type="submit">create post</button>
+   
+</form> -->
+
+<mat-form-field class="example-full-width">
+    <mat-label>Add your New post here</mat-label>
+    <textarea (focus)="upsertPost($event)" (blur)="upsertPost($event)" ngModel name="content" matInput placeholder="post?.content"></textarea>
+</mat-form-field>

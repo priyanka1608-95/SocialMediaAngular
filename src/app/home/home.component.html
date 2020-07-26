@@ -1,0 +1,65 @@
+
+<div style="align-self: center;">
+    <p>Hello {{userName}}</p>
+</div>
+<hr>
+<mat-accordion>
+    <mat-expansion-panel *ngFor="let user of users" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <b> {{user.name}}</b>
+            </mat-panel-title>
+            <mat-panel-description>
+                {{panelOpenState ? 'Hide' : 'View'}} Posts
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div *ngFor="let post of user?.posts" class="row">
+            <div *ngIf = "!isEditEnabled" class="col-md-10">
+                <p>{{post.content}}</p>
+            </div>
+            <div *ngIf = "isEditEnabled" class="col-md-10">
+                <app-post [post]="post"></app-post>
+            </div>
+
+            <div *ngIf="userid == user.id" class="col-md-1">
+                <div class="example-button-row">
+                    <div class="example-flex-container">
+                        <button (click)=deletePost(post.id) mat-icon-button
+                            aria-label="Example icon button with a vertical three dot icon">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+            <div *ngIf="userid == user.id" class="col-md-1">
+                <div class="example-button-row">
+                    <div class="example-flex-container">
+                        <button (click) = verifyEdit() mat-icon-button aria-label="Edit Post">
+                            <mat-icon>open_in_new</mat-icon>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- <div> 
+            <div class="row">
+                <button (click) = addpost() mat-raised-button color="primary">Create Post</button>      
+            </div>
+            <div class="row">
+                <app-post></app-post>
+            </div>  
+        </div> -->
+        
+    </mat-expansion-panel>
+    <hr>
+        <div>
+    <!--<div class="row">
+                <button (click) = addpost() mat-raised-button color="primary">Create Post</button>      
+            </div> -->
+                    <app-post></app-post>
+        
+        </div>
+
+</mat-accordion>
