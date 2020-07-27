@@ -11,7 +11,21 @@
    
 </form> -->
 
-<mat-form-field class="example-full-width">
+<!-- <mat-form-field class="example-full-width">
     <mat-label>Add your New post here</mat-label>
     <textarea (focus)="upsertPost($event)" (blur)="upsertPost($event)" ngModel name="content" matInput placeholder="post?.content"></textarea>
-</mat-form-field>
+</mat-form-field> -->
+
+<form [formGroup]="postForm" (ngSubmit)="upsertPost()">
+    <div class="row">
+        <div class="col-md-10">
+            <mat-form-field class="example-full-width">
+                <mat-label>Add your New post here</mat-label>
+                <textarea [(ngModel)] = "content" ngModel name="content" matInput [placeholder]="content" formControlName="postContent"></textarea>
+            </mat-form-field>
+        </div>
+        <div class="col-md-2">
+            <button mat-raised-button color="primary">{{buttonType}}</button>
+        </div>
+    </div>
+</form>

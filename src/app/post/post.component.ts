@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UserServiceService } from '../user-service.service';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-post',
@@ -9,33 +11,59 @@ import { FormsModule } from '@angular/forms';
 })
 export class PostComponent implements OnInit {
 
-  @Input() post:any
-  id:any
-  user:any
+  @Input() post :any;
+  @Input() requestType:string;
+  id: any;
+  user: any;
+  content: any;
+  buttonType: any;
+  postRequest={} as any;
 
-  constructor(public service:UserServiceService) { }
-  addpost(Formdata)
-  {
+  postForm = new FormGroup({
+    postContent: new FormControl('')
+  });
 
 
+  constructor(public service: UserServiceService,public router:Router) { }
+  
+  upsertPost() {
+    console.log(this.postForm.value.postContent)
+    if (this.requestType=="update") {
+      this.post.content = this.postForm.value.postContent;
+
+      this.postRequest.post=this.post;
+      this.postRequest.userId = sessionStorage.getItem('userId');
+      this.postRequest.requestType="update";
+     
+    }
+    else {
+      this.post = {}
+      this.post.content = this.postForm.value.postContent;
+
+      this.postRequest.post=this.post;
+      this.postRequest.userId = sessionStorage.getItem('userId');
+      this.postRequest.requestType="create";
+
+    }
+    this.service.addOrUpdatePost(this.postRequest).subscribe(response=>{
+      console.log(response);
+      this.router.navigate(['home']);
+
+    })
   }
 
-  upsertPost(data) {
-    console.log(this.post);
-    console.log(data.target.value);
-  }
-
-  getUserById()
-  {
-    this.id=sessionStorage.getItem('id');
-      this.service.getUserById(this.id).subscribe(response=>{
-        console.log(response);
-        this.user=response;
-
-      });
-  }
+  
 
   ngOnInit(): void {
+    
+    if (this.requestType=="update") {
+      this.content = this.post.content;
+      this.buttonType = "Update";
+    }
+    else {
+      this.buttonType = "Create";
+    }
+
   }
 
 }

@@ -29,6 +29,16 @@ export class UserServiceService {
 
   getAllUsers()
   {
-    return this.http.get("http://localhost:8080/socialmedia/users/getAllUsers")
+    return this.http.get("http://localhost:8080/socialmedia/users/getAllUsers");
+  }
+
+  addOrUpdatePost(post)
+  {
+    return this.http.post("http://localhost:8080/socialmedia/users/addOrUpdatePost",post);
+  }
+
+  getNews()
+  {
+    return this.http.get("http://localhost:8080/socialmedia/news");
   }
 }
